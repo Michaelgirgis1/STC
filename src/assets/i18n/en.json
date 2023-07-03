@@ -1,0 +1,18 @@
+{
+    "Login": "login",
+    "Username": "User Name",
+    "Passwrod": "passwrod",
+    "Logout": "logout",
+    "Admin_Dashbarod": "Admin Dashboard",
+    "Add_product": "Add Product",
+    "Delete": "Delete",
+    "Updated": "Update",
+    "Cancel": "Cancel",
+    "ProductTitle": "Name of product",
+    "ProductPrice": "Price",
+    "TitleRequired": "Please enter the name of the product",
+    "PriceRequired":  "Please enter the price of the product",
+    "Update_Product": "Update product",
+    "Add_Prduct": "Add product"
+
+}

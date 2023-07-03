@@ -1,0 +1,21 @@
+{
+    "Login": "تسجيل الدخول",
+    "Username": "اسم المستخدم",
+    "Passwrod": "الرقم السري",
+    "Logout": "تسجيل الخروج",
+    "Admin_Dashbarod": " لوحة تحكم المسؤول",
+    "Add_product": "إضافة المنتج",
+    "Delete": "حذف منتج",
+    "Updated": "تعديل",
+    "Cancel": "الغاء",
+    "Add": "إضافة منتج جديد",
+    "ProductTitle": "اسم المنتج",
+    "ProductPrice": "سعر المنتج",
+    "TitleRequired": "برجاء إدخال اسم المنتج",
+    "PriceRequired": "برجاء إدخال سعر المنتج",
+    "Update_Product": "تعديل منتج",
+    "Add_Prduct": "اضافه منتج"
+
+
+
+}

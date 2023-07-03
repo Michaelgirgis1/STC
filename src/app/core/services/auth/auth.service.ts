@@ -54,7 +54,6 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    debugger
     const isAuthenticated = localStorage.getItem('is_authenticated') === 'true';
     this.isAuthenticatedSubject.next(isAuthenticated);
     return isAuthenticated;

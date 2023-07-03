@@ -10,7 +10,6 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-
   {
     path: 'admin',
     loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule),

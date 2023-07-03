@@ -1,0 +1,27 @@
+.header {
+  box-shadow: 0 4px 4px -4px rgb(0, 0, 0, 0.12);
+  padding: 10px 0;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .header__logo {
+    img {
+      max-width: 90px;
+    }
+  }
+  .header__logout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .lang {
+      display: flex;
+      margin-inline-end: 10px;
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+}
