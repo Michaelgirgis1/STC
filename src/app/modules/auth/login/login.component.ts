@@ -4,6 +4,7 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 import {AppRouter} from "../../../shared/services/router"
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -11,6 +12,8 @@ import { Title } from '@angular/platform-browser';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
+  private loginSubscription: Subscription | null = null;
+
   loginForm: FormGroup | undefined;
   errorMessage: string = '';
   private readonly AUTH_KEY = 'is_authenticated';
@@ -26,13 +29,18 @@ export class LoginComponent {
       password: ['', Validators.required]
     });
   }
+  ngOnDestroy() {
+    if (this.loginSubscription) {
+      this.loginSubscription.unsubscribe();
+    }
 
+  }
   login() {
     const { username, password } = this.loginForm?.value;
     this.authService.login(username, password)
 
     this.errorMessage = '';
-    this.authService.login( username, password).subscribe(
+    this.loginSubscription = this.authService.login( username, password).subscribe(
       (isAuthenticated: boolean) => {
 
         if (isAuthenticated) {

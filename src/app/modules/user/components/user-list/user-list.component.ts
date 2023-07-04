@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 import { Product } from '../../../../shared/models/product.model';
 
 import { Title } from '@angular/platform-browser';
-
-
+import { Subscription } from 'rxjs';
 import {CategoryService} from '../../services/category.service'
 import { Category } from './../../../../shared/models/category.model';
 @Component({
@@ -12,6 +11,8 @@ import { Category } from './../../../../shared/models/category.model';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent {
+  private categoriesSubscription: Subscription | null = null;
+  private productsSubscription: Subscription | null = null;
   categories: Category[] = [];
   products: Product[] = [];
   filteredProducts: Product[] = [];
@@ -27,9 +28,17 @@ export class UserListComponent {
     this.getCategreies();
 
   }
+  ngOnDestroy() {
+    if (this.categoriesSubscription) {
+      this.categoriesSubscription.unsubscribe();
+    }
+    if (this.productsSubscription) {
+      this.productsSubscription.unsubscribe();
+    }
+  }
   getCategreies() {
     this.isloaderShown = true;
-    this.categoryService.getCategories().subscribe(
+    this.categoriesSubscription = this.categoryService.getCategories().subscribe(
       categories => {
         this.categories = categories;
         if (categories.length > 0) {
@@ -49,7 +58,7 @@ export class UserListComponent {
 
 
   selectCategory(category:any) {
-    this.categoryService.getProductsByCategory(category).subscribe(
+    this.productsSubscription = this.categoryService.getProductsByCategory(category).subscribe(
       products => {
         this.products = products;
         this.applyFilter();
@@ -71,11 +80,11 @@ export class UserListComponent {
       else this.isEmpty = false;
   }
   getGridColumns(): number {
-    if (window.innerWidth <= 767) { // Mobile devices
+    if (window.innerWidth <= 767) {
       return 1;
-    } else if (window.innerWidth <= 1023) { // Tablet devices
+    } else if (window.innerWidth <= 1023) {
       return 2;
-    } else { // Desktop devices
+    } else {
       return 3;
     }
   }

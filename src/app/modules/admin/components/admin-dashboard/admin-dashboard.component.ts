@@ -4,12 +4,15 @@ import {MatDialog} from '@angular/material/dialog';
 import {UpdateAddProductComponent}  from "../update-add-product/update-add-product.component"
 import { Product } from '../../../../shared/models/product.model';
 import { Title } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
   styleUrls: ['./admin-dashboard.component.scss']
 })
 export class AdminDashboardComponent {
+  private productsSubscription: Subscription | null = null;
+  private deleteProductSubscription: Subscription | null = null;
   products: Product[] = [];
   isloaderShown = false;
   isProductDeleting = false;
@@ -33,6 +36,14 @@ export class AdminDashboardComponent {
     this.titleService.setTitle('Admin Dashboard');
     this.screenWidth = window.innerWidth;
     this.getProducts();
+  }
+  ngOnDestroy() {
+    if (this.productsSubscription) {
+      this.productsSubscription.unsubscribe();
+    }
+    if (this.deleteProductSubscription) {
+      this.deleteProductSubscription.unsubscribe();
+    }
   }
 
 
@@ -61,7 +72,7 @@ export class AdminDashboardComponent {
   }
   getProducts(): void {
     this.isloaderShown = true;
-    this.productService.getProducts().subscribe(
+    this.productsSubscription = this.productService.getProducts().subscribe(
       (products: Product[]) => {
         this.isloaderShown = false;
         this.products = products;
@@ -85,7 +96,7 @@ export class AdminDashboardComponent {
   deleteProduct(productId: number, indx: number): void {
     this.isProductDeleting = true;
     this.ProductDeletingId = productId;
-    this.productService.deleteProduct(productId).subscribe(() => {
+    this.deleteProductSubscription = this.productService.deleteProduct(productId).subscribe(() => {
       this.products.splice(indx, 1)
       this.isProductDeleting = false;
       this.ProductDeletingId = -1;

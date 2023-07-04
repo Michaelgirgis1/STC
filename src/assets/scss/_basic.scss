@@ -52,8 +52,9 @@
 .btn {
   color: #fff;
   font-size: 12px !important;
-  padding: 5px 17px !important;
+  padding: 6px 17px !important;
   position: relative;
+  border: 0;
   img {
     max-width: 15px;
     position: absolute;
@@ -121,6 +122,22 @@
 
     }
 
+}
+
+.add-product {
+  .page-title {
+    margin-bottom: 35px;
+  }
+  .btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    img {
+      max-width: 25px;
+    }
+  }
+  .form-group {
+    margin-bottom: 17px;
+  }
 }
 @media (max-width: 768px) {
   .container {

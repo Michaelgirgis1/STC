@@ -51,17 +51,18 @@
         </mat-error>
       </div>
 
-      <div class="btn">
+      <div class="btn-wrapper">
+        <img
+        src="../../../assets/images/loader.gif"
+        alt="update product loader"
+        *ngIf="isProductUpdating"
+      />
         <button
           class="btn primary"
           type="submit"
           [translate]="isProductAdd ? 'Save' : 'Updated'"
         ></button>
-        <img
-          src="../../../assets/images/loader.gif"
-          alt="update product loader"
-          *ngIf="isProductUpdating"
-        />
+
         <button class="btn secondary" translate="Cancel"></button>
       </div>
     </form>
