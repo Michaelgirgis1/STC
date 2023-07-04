@@ -1,1 +1,58 @@
-<p>admin-dashboard works!</p>
+<div class="admin-dashboard">
+  <div class="container">
+    <h1 class="page-title" >Admin_Dashbarod</h1>
+    <div class="product-list">
+      <table>
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of currentPageData; let index = index; trackBy: trackProductBy">
+            <td>{{ product.id }}</td>
+            <td>{{ product.title }}</td>
+            <td>{{ product.price }}</td>
+            <td>
+              <button class="btn primary"  >Updated</button>
+              <button class="btn secondary" (click)="deleteProduct(product.id, index)" >
+                Delete
+                <img
+                 src="../../../assets/images/loader.gif"
+                 alt="delete product loader"
+                 *ngIf="isProductDeleting && ProductDeetingId === product.id "/>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="pagination" *ngIf="isPagerShow">
+        <button type="button" class="prev" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)"><i class="arrow left"></i></button>
+        <button type="button" class="next" [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)"><i class="arrow right"></i></button>
+        <span> {{(+startIndex) + 1}} - {{lastRenderedPage}} of {{ products.length }}</span>
+        <div class="pagination__page">
+          <!-- <ng-select [items]="tablePages"
+          (change)="onItemsPerPageChange($event)"
+          bindLabel="label"
+          id="table-pages"
+          [editableSearchTerm] = "false"
+          [clearable] = "false"
+          [(ngModel)]="selectedPage">
+          </ng-select> -->
+        </div>
+      </div>
+
+
+    </div>
+    <app-loader *ngIf="isloaderShown"></app-loader>
+    <button class="custom-btn" (click)="openAddProduct()">Add_product</button>
+  </div>
+
+
+
+</div>
+
+
