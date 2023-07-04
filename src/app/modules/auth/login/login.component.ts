@@ -3,6 +3,8 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 
 import {AppRouter} from "../../../shared/services/router"
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Title } from '@angular/platform-browser';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -13,8 +15,12 @@ export class LoginComponent {
   errorMessage: string = '';
   private readonly AUTH_KEY = 'is_authenticated';
   private readonly ROLE_KEY = 'user_role';
-  constructor( private authService: AuthService, private appRouter: AppRouter, private formBuilder: FormBuilder) { }
+  constructor( private authService: AuthService, private appRouter: AppRouter,
+    private titleService: Title,
+    private formBuilder: FormBuilder) { }
   ngOnInit() {
+    this.titleService.setTitle('Login');
+
     this.loginForm = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', Validators.required]

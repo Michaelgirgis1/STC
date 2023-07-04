@@ -2,7 +2,7 @@ import { Component, Inject } from '@angular/core';
 import {FormBuilder, FormGroup ,Validators} from "@angular/forms"
 
 import { ProductService } from '../../services/product.service'
-import { Product } from '../../models/product.model';
+import { Product } from '../../../../shared/models/product.model';
 
 import { MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 export interface DialogData {

@@ -2,8 +2,8 @@ import { Component  } from '@angular/core';
 import { ProductService } from '../../services/product.service'
 import {MatDialog} from '@angular/material/dialog';
 import {UpdateAddProductComponent}  from "../update-add-product/update-add-product.component"
-import { Product } from '../../models/product.model';
-
+import { Product } from '../../../../shared/models/product.model';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-admin-dashboard',
   templateUrl: './admin-dashboard.component.html',
@@ -26,9 +26,11 @@ export class AdminDashboardComponent {
   ]
   selectedPage = {id: 2, label: 10}
   constructor(private productService: ProductService,
+    private titleService: Title,
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Admin Dashboard');
     this.screenWidth = window.innerWidth;
     this.getProducts();
   }
