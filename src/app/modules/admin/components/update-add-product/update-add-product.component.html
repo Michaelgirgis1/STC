@@ -1,7 +1,8 @@
-
 <div class="add-product">
-  <h3 class="page-title"
-  [translate]="isAdd ? 'Add_product' : 'Update_Product'"></h3>
+  <h3
+    class="page-title"
+    [translate]="isProductAdd ? 'Add_product' : 'Update_Product'"
+  ></h3>
   <div class="modal-body">
     <form
       class="update-product-from"
@@ -21,9 +22,12 @@
             name="title"
           />
         </mat-form-field>
-        <mat-error  class="error"  *ngIf="getTitle.invalid && getTitle.touched"translate="PriceRequired">
+        <mat-error
+          class="error"
+          *ngIf="getTitle.invalid && getTitle.touched"
+          translate="PriceRequired"
+        >
         </mat-error>
-
       </div>
 
       <div class="form-group">
@@ -39,24 +43,27 @@
             name="price"
           />
         </mat-form-field>
-        <mat-error class="error" *ngIf="getPrice.invalid && getPrice.touched" translate="PriceRequired">
+        <mat-error
+          class="error"
+          *ngIf="getPrice.invalid && getPrice.touched"
+          translate="PriceRequired"
+        >
         </mat-error>
-
       </div>
 
       <div class="btn">
-        <button class="btn primary" type="submit" translate="Updated">
-          <img
-            src="../../../assets/images/loader.gif"
-            alt="update product loader"
-            *ngIf="isProductUpdating"
-          />
-        </button>
+        <button
+          class="btn primary"
+          type="submit"
+          [translate]="isProductAdd ? 'Save' : 'Updated'"
+        ></button>
+        <img
+          src="../../../assets/images/loader.gif"
+          alt="update product loader"
+          *ngIf="isProductUpdating"
+        />
         <button class="btn secondary" translate="Cancel"></button>
-
       </div>
-
-
     </form>
   </div>
 </div>

@@ -1,12 +1,14 @@
 import { Component, Inject } from '@angular/core';
-import {FormBuilder, FormGroup, FormControlName ,Validators} from "@angular/forms"
+import {FormBuilder, FormGroup ,Validators} from "@angular/forms"
 
 import { ProductService } from '../../services/product.service'
 import { Product } from '../../models/product.model';
 
-import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 export interface DialogData {
-  name: string;
+  isAdd: any;
+  product: Product,
+  index: number
 }
 @Component({
   selector: 'app-update-add-product',
@@ -21,9 +23,8 @@ export class UpdateAddProductComponent {
 
   products: Product[] = [];
   isProductUpdating = false;
-
+  isProductAdd = true
   updatedProductData: any
-  isAdd = true;
   get getTitle(): any {return this.updateFrom!.get('title')}
   get getPrice(): any {return this.updateFrom!.get('price')}
 
@@ -35,63 +36,56 @@ export class UpdateAddProductComponent {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {}
   ngOnInit(): void {
-   this.initUpdateForm()
+    this.isProductAdd = this.data.isAdd
+    if(this.isProductAdd ) {
+      this.initUpdateForm({price: '', title: ''})
+    } else {
+      this.updatedProductData = this.data.product
+      this.initUpdateForm({price: this.data.product.price, title: this.data.product.title})
+    }
   }
 
 
   submitUpdate() {
     if(this.updateFrom!.valid) {
-       if(this.isAdd) {
+       if(this.isProductAdd) {
         this.addProduct();
-
        } else {
         this.updateproduct();
        }
-
     } else {
       this.updateFrom!.markAllAsTouched();
     }
-
   }
   updateproduct () {
     this.isProductUpdating = true;
-    this.productService.updateProduct(this.updatedProductData.id, this.updatedProductData).subscribe(Response => {
-
+    this.productService.updateProduct(this.updatedProductData.id, this.updateFrom.value).subscribe(Response => {
       this.isProductUpdating = false;
-      const dataToSend = {...this.updateFrom!.value,  id :this.updatedProductData.id};
+      const dataToSend = {product: {...this.updateFrom!.value,  id :this.updatedProductData.id}, index: this.data.index, isAdd: false};
       this.dialogRef.close(dataToSend);
-      // this.modalRef!.hide();
-    },
-      (error: any) => {
+    },() => {
         this.isProductUpdating = false;
-        // this.modalRef!.hide();
       }
     )
 
   }
-  initUpdateForm(): void {
-
+  initUpdateForm(data:any): void {
     this.updateFrom = this._FormBuilder.group({
-      price: ['', [Validators.required]],
-      title:['',  [Validators.required]],
+      price: [data.price, [Validators.required]],
+      title:[data.title,  [Validators.required]],
     });
   }
   addProduct(): void {
-    debugger
     this.isProductUpdating = true;
-    this.productService.addProduct(this.updateFrom.value ).subscribe(Response => {
+    this.productService.addProduct(this.updateFrom.value ).subscribe(() => {
       this.products.push({...this.updateFrom!.value,  id: Math.floor(Math.random() * 10000)})
-
       this.isProductUpdating = false;
-      const dataToSend = {...this.updateFrom!.value,  id: Math.floor(Math.random() * 10000)};
+      const dataToSend = {product: {...this.updateFrom!.value,  id: Math.floor(Math.random() * 10000)},  isAdd: true};
       this.dialogRef.close(dataToSend);
-    },
-      (error: any) => {
+    },() => {
         this.isProductUpdating = false;
-        // this.modalRef!.hide();
       }
     )
-
   }
 
 }

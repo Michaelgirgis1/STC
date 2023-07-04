@@ -1,6 +1,6 @@
 <div class="admin-dashboard">
   <div class="container">
-    <h1 class="page-title" >Admin_Dashbarod</h1>
+    <h1 class="page-title"  translate="Admin_Dashbarod"></h1>
     <div class="product-list">
       <table>
         <thead>
@@ -17,13 +17,13 @@
             <td>{{ product.title }}</td>
             <td>{{ product.price }}</td>
             <td>
-              <button class="btn primary"  >Updated</button>
-              <button class="btn secondary" (click)="deleteProduct(product.id, index)" >
-                Delete
+              <button class="btn primary"  (click)="updateProduct(product, index)" translate="Updated"></button>
+              <button class="btn secondary" (click)="deleteProduct(product.id, index)" translate="Delete">
+
                 <img
                  src="../../../assets/images/loader.gif"
                  alt="delete product loader"
-                 *ngIf="isProductDeleting && ProductDeetingId === product.id "/>
+                 *ngIf="isProductDeleting && ProductDeletingId === product.id "/>
               </button>
             </td>
           </tr>
@@ -32,23 +32,16 @@
       <div class="pagination" *ngIf="isPagerShow">
         <button type="button" class="prev" [disabled]="currentPage === 1" (click)="onPageChange(currentPage - 1)"><i class="arrow left"></i></button>
         <button type="button" class="next" [disabled]="currentPage === totalPages" (click)="onPageChange(currentPage + 1)"><i class="arrow right"></i></button>
-        <span> {{(+startIndex) + 1}} - {{lastRenderedPage}} of {{ products.length }}</span>
+        <span> {{(+startIndex) + 1}} - {{lastRenderedPage}} {{'OF' | translate}} {{ products.length }}</span>
         <div class="pagination__page">
-          <!-- <ng-select [items]="tablePages"
-          (change)="onItemsPerPageChange($event)"
-          bindLabel="label"
-          id="table-pages"
-          [editableSearchTerm] = "false"
-          [clearable] = "false"
-          [(ngModel)]="selectedPage">
-          </ng-select> -->
+
         </div>
       </div>
 
 
     </div>
     <app-loader *ngIf="isloaderShown"></app-loader>
-    <button class="custom-btn" (click)="openAddProduct()">Add_product</button>
+    <button class="custom-btn" (click)="openAddProduct()" translate="Add_product"></button>
   </div>
 
 

@@ -1,8 +1,7 @@
-import { Component, TemplateRef  } from '@angular/core';
+import { Component  } from '@angular/core';
 import { ProductService } from '../../services/product.service'
-import {MatDialog, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import {UpdateAddProductComponent}  from "../update-add-product/update-add-product.component"
-import {FormBuilder, FormGroup, FormControlName ,Validators} from "@angular/forms"
 import { Product } from '../../models/product.model';
 
 @Component({
@@ -16,11 +15,7 @@ export class AdminDashboardComponent {
   isProductDeleting = false;
   isProductUpdating = false;
   screenWidth= 0;
-  ProductDeetingId = -1;
-  // modalRef?: BsModalRef;
-  updatedProductData: any;
-  isAdd = false;
-  updateFrom: FormGroup | undefined;
+  ProductDeletingId = -1;
   isPagerShow = false;
   currentPage: number = 1;
   itemsPerPage: number = 10;
@@ -31,7 +26,6 @@ export class AdminDashboardComponent {
   ]
   selectedPage = {id: 2, label: 10}
   constructor(private productService: ProductService,
-    private fb : FormBuilder,
     public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -57,10 +51,7 @@ export class AdminDashboardComponent {
   }
 
 
-  onItemsPerPageChange(selectedValue: any) {
-    this.currentPage = 1;
-    this.itemsPerPage = selectedValue.label;
-  }
+
   get lastRenderedPage(): number {
     const lastRenderedPage = this.endIndex + 1
     if(lastRenderedPage > this.products.length) return this.products.length
@@ -84,102 +75,54 @@ export class AdminDashboardComponent {
   }
 
 
-  initUpdateForm(data: any): void {
 
-    this.updateFrom = this.fb.group({
-      price: [data.price, [Validators.required]],
-      title:[data.title,  [Validators.required]],
-    });
-  }
 
-  get fTitle(): any {return this.updateFrom!.get('title')}
-  get fPrice(): any {return this.updateFrom!.get('price')}
 
 
 
   deleteProduct(productId: number, indx: number): void {
     this.isProductDeleting = true;
-    this.ProductDeetingId = productId;
-    this.productService.deleteProduct(productId).subscribe(Response => {
+    this.ProductDeletingId = productId;
+    this.productService.deleteProduct(productId).subscribe(() => {
       this.products.splice(indx, 1)
       this.isProductDeleting = false;
-      this.ProductDeetingId = -1;
+      this.ProductDeletingId = -1;
     },
-      (error: any) => {
+      () => {
         this.isProductDeleting = false;
-        this.ProductDeetingId = -1;
-        console.error('Error retrieving products:', error);
+        this.ProductDeletingId = -1;
       }
     )
-
-    console.log("Delete Product", productId, indx);
   }
 
-  openModal(template: TemplateRef<any>, data: any, isAdd:boolean) {
-    this.isAdd = isAdd;
-    if (isAdd) {
-      this.updatedProductData  = {
-        title: null,
-        price: null
-      }
-
-    } else {
-
-      this.updatedProductData = data
-    }
-
-    this.initUpdateForm(data)
-    // this.modalRef = this.modalService.show(template);
-
-  }
-  // submitUpdate() {
-  //   if(this.updateFrom!.valid) {
-  //      if(this.isAdd) {
-  //       this.addProduct();
-
-  //      } else {
-  //       this.updateproduct();
-  //      }
-
-  //   } else {
-  //     this.updateFrom!.markAllAsTouched();
-  //   }
-
-  // }
 
 
-  updateproduct () {
-    this.isProductUpdating = true;
-    this.productService.updateProduct(this.updatedProductData.id, this.updatedProductData).subscribe(Response => {
-      const index =  this.products.findIndex(item => item.id === this.updatedProductData.id);
-      this.products[index] = {...this.updateFrom!.value,  id :this.updatedProductData.id}
-      this.isProductUpdating = false;
-      // this.modalRef!.hide();
-    },
-      (error: any) => {
-        this.isProductUpdating = false;
-        // this.modalRef!.hide();
-      }
-    )
 
+  updateProduct (product: object, index: number) {
+    this.openAddOrEditProductDialog({isAdd: false, product: product, index: index})
   }
   trackProductBy(_: number, product: any): number {
     return product.id;
   }
 
   openAddProduct(): void {
+    this.openAddOrEditProductDialog({isAdd: true})
+
+  }
+
+  openAddOrEditProductDialog(data: object) {
     const dialogRef = this.dialog.open(UpdateAddProductComponent, {
-      data: {isAdd: true},
+      data: data,
       maxWidth: '800px',
       height: '45%',
-      maxHeight: '800px',
+      maxHeight: this.screenWidth > 768 ? '800px' : '500px',
       width: this.screenWidth > 768 ? '30%' : '90%',
       panelClass: 'full-screen-modal',
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) this.products.push(result)
-      console.log('The dialog was closed');
+      if (result.isAdd) this.products.push(result.product)
+      else this.products[result.index] = result.product
     });
   }
 
