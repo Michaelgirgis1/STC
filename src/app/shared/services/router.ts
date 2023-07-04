@@ -11,7 +11,7 @@ export class AppRouter {
     this.router.navigate(['/admin']);
   }
   goToUserPage(): void {
-    this.router.navigate(['/user']);
+    this.router.navigate(['/users']);
   }
 
   goToLoginPage(): void {

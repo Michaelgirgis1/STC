@@ -1,1 +1,49 @@
-<p>user-list works!</p>
+<div class="user-page">
+  <div class="container">
+    <h1 class="page-title" >User View</h1>
+    <div class="categories">
+      <h4 class="section-title">Select Category</h4>
+      <select [(ngModel)]="selectedCategory" (change)="changeCategory()">
+        <option value="">All Categories</option>
+        <option *ngFor="let category of categories" [value]="category">{{ category }}</option>
+      </select>
+    </div>
+
+    <div class="products">
+
+      <div class="filters">
+        <mat-form-field class="form-group">
+          <!-- <mat-label translate="Passwrod"></mat-label> -->
+          <input
+            matInput
+            type="text"
+            class="form-control"
+            placeholder="Filter products"
+            [(ngModel)]="filterText"
+            (input)="applyFilter()"
+          />
+        </mat-form-field>
+      </div>
+
+      <mat-grid-list  class="product-list" [cols]="getGridColumns()" rowHeight="1:1" class="product-list" >
+        <mat-grid-tile *ngFor="let product of filteredProducts" fxFlex="calc(100% / getGridColumns())"  >
+          <div class="product-card" >
+            <h4 class="product-card__title">{{ product.title }}</h4>
+            <p class="product-card__brief">{{ product.description }}</p>
+            <p class="product-card__price">Price: {{ product.price | currency }}</p>
+          </div>
+        </mat-grid-tile>
+
+      </mat-grid-list>
+      <div *ngIf="isEmpty" class="products__empty">
+        <p>There is no items </p>
+
+      </div>
+      <div   *ngIf="isloaderShown">
+        <app-loader></app-loader>
+
+      </div>
+
+    </div>
+  </div>
+</div>

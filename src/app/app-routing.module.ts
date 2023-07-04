@@ -7,7 +7,7 @@ import {PageNotFoundComponent} from './core/components/page-not-found/page-not-f
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login',
+    redirectTo: 'admin',
     pathMatch: 'full'
   },
   {
@@ -23,8 +23,7 @@ const routes: Routes = [
 
    {
     path: 'login',
-    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
-    canActivate: [NoAuthGuard]
+    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'not-found',

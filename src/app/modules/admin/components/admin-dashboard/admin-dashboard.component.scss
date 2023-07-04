@@ -1,0 +1,156 @@
+.admin-dashboard{
+  margin-bottom: 50px;
+
+  .product-list {
+    margin-bottom: 25px;
+    th {
+      background-color: #4F008C;
+      color: #fff;
+      font-size: 14px;
+    }
+    td,
+    th {
+      padding: 8px 5px;
+    }
+    tr {
+      td {
+        &:last-child {
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          .btn {
+            &:first-child {
+              margin-inline-end: 10px;
+            }
+          }
+        }
+      }
+    }
+    thead {
+      tr {
+        th {
+          &:last-child {
+            display: flex;
+            justify-content: center;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        &:nth-child(even) {
+          background-color: #fafafa;
+
+        }
+      }
+    }
+    tr.selected {
+      background-color: #dddddd;
+    }
+    table {
+      width: 100%;
+    }
+    .btn {
+      transition: all 0.5s ease;
+      &.show {
+        pointer-events: initial;
+        opacity: 1;
+      }
+      &.hide {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+    input[type=checkbox] {
+      width: 13px;
+      height: 13px;
+
+    }
+
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px 25px;
+    background-color: #0000001a;
+    align-items: center;
+    span {
+      font-size: 14px;
+    }
+    .pagination__page {
+      margin-inline-start: 10px;
+    }
+    button {
+      padding: 0;
+      border: 0;
+      max-height: 20px;
+      background-color: transparent;
+      margin-inline-end: 20px;
+      display: flex;
+
+      &:focus-visible,
+      &:focus {
+        outline: 0;
+      }
+      &:disabled {
+        opacity: 0.5;
+      }
+      i {
+
+       cursor: pointer;
+        &::before {
+          color: #00000099;
+        }
+        &:focus-visible {
+          outline: 0;
+        }
+      }
+    }
+
+  }
+
+
+
+
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard{
+    margin-bottom: 50px;
+
+    .product-list {
+      th {
+        white-space: nowrap;
+      }
+    }
+  }
+
+
+}
+@media (max-width: 767px) {
+  .admin-dashboard{
+    .product-list {
+      tr {
+        td {
+          font-size: 9px;
+          &:last-child {
+            .btn {
+              &:first-child {
+                margin-inline-end: 5px;
+              }
+            }
+          }
+        }
+      }
+      th {
+        font-size: 10px;
+        white-space: nowrap;
+      }
+    }
+  }
+
+}
+

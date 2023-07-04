@@ -13,6 +13,9 @@
     "TitleRequired": "Please enter the name of the product",
     "PriceRequired":  "Please enter the price of the product",
     "Update_Product": "Update product",
-    "Add_Prduct": "Add product"
+    "Add_Prduct": "Add product",
+    "Add": "Add",
+    "Save": "Save",
+    "OF": "OF"
 
 }

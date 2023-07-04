@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from './components/navbar/navbar.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { SharedModule } from '../shared/shared.module';
 import { AuthGuard } from './guards/auth.guard';
@@ -9,7 +8,6 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { RouterModule } from '@angular/router';
 @NgModule({
   declarations: [
-    NavbarComponent,
     PageNotFoundComponent,
     LayoutComponent
   ],
