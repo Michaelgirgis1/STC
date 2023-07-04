@@ -3,40 +3,43 @@
     <div class="row">
       <div class="col-lg-5 col-12">
         <div class="login__wrapper">
-          <h1 class="page-title" >Login</h1>
+          <h1 class="page-title" translate="Login"></h1>
           <ng-container *ngIf="loginForm">
-            <form (ngSubmit)="login()" [formGroup]="loginForm" class="login__form">
+            <form
+              (ngSubmit)="login()"
+              [formGroup]="loginForm"
+              class="login__form">
               <mat-form-field class="form-group">
-                <mat-label >Username</mat-label>
-                <input matInput
-                       type="text"
-                       id="username"
-                       formControlName="username"
-                       name="username">
+                <mat-label translate="Username"></mat-label>
+                <input
+                  matInput
+                  type="text"
+                  id="username"
+                  formControlName="username"
+                  name="username"
+                />
               </mat-form-field>
               <mat-form-field class="form-group">
-                <mat-label >Password</mat-label>
-                <input matInput
-                       type="password"
-                       id="password"
-                       formControlName="password"
-                       name="password">
+                <mat-label translate="Passwrod"></mat-label>
+                <input
+                  matInput
+                  type="password"
+                  id="password"
+                  formControlName="password"
+                  name="password"
+                />
               </mat-form-field>
 
               <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
-              <button mat-raised-button
-                      type="submit"
-                      class="custom-btn"
-                      translate="Login">Login</button>
+              <button
+                type="submit"
+                class="custom-btn"
+                translate="Login"
+              ></button>
             </form>
-
           </ng-container>
-
         </div>
       </div>
     </div>
   </div>
 </div>
-
-
-

@@ -13,13 +13,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatInputModule } from '@angular/material/input';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateLoader, TranslateModule  } from '@ngx-translate/core';
 import { MatButtonModule } from '@angular/material/button';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 export function HttpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
 }
+
+import { MatDialogModule } from '@angular/material/dialog';
 @NgModule({
   declarations: [
     AppComponent
@@ -33,11 +35,20 @@ export function HttpLoaderFactory(httpClient: HttpClient): TranslateHttpLoader {
     SharedModule,
     AuthModule,
     ReactiveFormsModule,
-    TranslateModule.forRoot(),
+    MatDialogModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule
   ],
+  exports: [TranslateModule],
   providers: [],
   bootstrap: [AppComponent]
 })

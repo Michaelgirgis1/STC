@@ -23,8 +23,7 @@ const routes: Routes = [
 
    {
     path: 'login',
-    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule),
-    canActivate: [NoAuthGuard]
+    loadChildren: () => import('./modules/auth/auth.module').then(m => m.AuthModule)
   },
   {
     path: 'not-found',
